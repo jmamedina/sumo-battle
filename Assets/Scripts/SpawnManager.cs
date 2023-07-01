@@ -8,19 +8,32 @@ public class SpawnManager : MonoBehaviour
     public GameObject enemyPrefab;
     //set the spawn range
     private float spawnRange = 10;
+    public int enemyCount;
 
     // Start is called before the first frame update
     void Start()
     {
-        
-        Instantiate(enemyPrefab, GemerateSpawnPosition(), enemyPrefab.transform.rotation);
+        spawnEnemyWave(3);
+    }
 
+    void spawnEnemyWave(int enemiesToSpawn)
+    {
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+            Instantiate(enemyPrefab, GemerateSpawnPosition(), enemyPrefab.transform.rotation);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        enemyCount = FindObjectsOfType<Enemy>().Length;
+        if(enemyCount == 0) { spawnEnemyWave(1);  };
+
+        if(transform.position.y > -10)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private Vector3 GemerateSpawnPosition()

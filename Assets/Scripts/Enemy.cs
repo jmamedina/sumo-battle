@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     //speed of the player
-    public float speed = 3.0f;
+    public float speed = 1.0f;
     //get the rigid body of the enemy
     private Rigidbody enemyRb;
     //get the player
