@@ -9,11 +9,16 @@ public class SpawnManager : MonoBehaviour
     //set the spawn range
     private float spawnRange = 10;
     public int enemyCount;
+    public int powerupCount;
+    public int waveNumber = 1;
+
+    public GameObject powerupPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
         spawnEnemyWave(3);
+        spawnPowerUp();
     }
 
     void spawnEnemyWave(int enemiesToSpawn)
@@ -24,16 +29,26 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    void spawnPowerUp()
+    {
+        Instantiate(powerupPrefab, GemerateSpawnPosition(), powerupPrefab.transform.rotation);
+    }
+
     // Update is called once per frame
     void Update()
     {
         enemyCount = FindObjectsOfType<Enemy>().Length;
-        if(enemyCount == 0) { spawnEnemyWave(1);  };
+        powerupCount = GameObject.FindGameObjectsWithTag("Powerup").Length;
 
-        if(transform.position.y > -10)
-        {
-            Destroy(gameObject);
-        }
+        if(enemyCount == 0) {
+            waveNumber++;
+            spawnEnemyWave(waveNumber);
+            if(powerupCount == 0)
+            {
+                spawnPowerUp();
+            }
+        };
+
     }
 
     private Vector3 GemerateSpawnPosition()
